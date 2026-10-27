@@ -453,7 +453,7 @@ try{(function(){
           return;
         }
         btn.textContent=t.question_sending;btn.disabled=true;
-        fetch(FORMSPREE_ENDPOINT,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
+        fetch(FORMSPREE_ENDPOINT,{method:'POST',body:withFormKey(new FormData(form)),headers:{'Accept':'application/json'}})
         .then(res=>{
           if(!res.ok)throw new Error('bad response');
           btn.textContent=t.question_sent;
@@ -696,7 +696,7 @@ document.getElementById('booking-form').addEventListener('submit',function(e){
     return;
   }
   btn.textContent='...';btn.disabled=true;
-  fetch(FORMSPREE_ENDPOINT,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}})
+  fetch(FORMSPREE_ENDPOINT,{method:'POST',body:withFormKey(new FormData(this)),headers:{'Accept':'application/json'}})
   .then(res=>{
     if(!res.ok)throw new Error('bad response');
     track('Trial booking submitted');
@@ -737,7 +737,11 @@ const CSV_SCHEMA='https://docs.google.com/spreadsheets/d/e/2PACX-1vSx5DO8VUAhMLv
 const CSV_TEMP_PERIODS='https://docs.google.com/spreadsheets/d/e/2PACX-1vSx5DO8VUAhMLv96t_zPgSghNPBuK683Hchwlc1MYh_XlmkNOCcphDAcNde1g42-Q/pub?gid=1900013866&single=true&output=csv';
 const CSV_TEMP_CLASSES='https://docs.google.com/spreadsheets/d/e/2PACX-1vSx5DO8VUAhMLv96t_zPgSghNPBuK683Hchwlc1MYh_XlmkNOCcphDAcNde1g42-Q/pub?gid=262188045&single=true&output=csv';
 const CSV_EXCEPTIONS='https://docs.google.com/spreadsheets/d/e/2PACX-1vSx5DO8VUAhMLv96t_zPgSghNPBuK683Hchwlc1MYh_XlmkNOCcphDAcNde1g42-Q/pub?gid=826852807&single=true&output=csv';
-const FORMSPREE_ENDPOINT='https://formspree.io/f/mzepjype';
+// Contact forms go through Web3Forms (switched from Formspree, which blocked the form).
+// The access key is public by design; Web3Forms ties it to the gym's inbox.
+const WEB3FORMS_KEY=''; // paste the gym's Web3Forms access key here
+const FORMSPREE_ENDPOINT=WEB3FORMS_KEY?'https://api.web3forms.com/submit':'';
+function withFormKey(fd){fd.append('access_key',WEB3FORMS_KEY);fd.append('from_name','Masters Gym hemsida');return fd;}
 // Google Apps Script Web App URL for the schedule-alerts sign-up (Prenumeranter tab).
 // Empty until the Apps Script is deployed — see /scripts/apps-script-alerts.gs for the
 // code to paste in, and ALERTS_SETUP.md for deployment steps. Once deployed, paste the
@@ -1177,7 +1181,7 @@ function submitNewsForm(e,formId,postTitle){
   const btn=form.querySelector('.news-interest-submit');
   const sent=form.querySelector('.news-interest-sent');
   btn.disabled=true;
-  fetch(FORMSPREE_ENDPOINT,{method:'POST',body:fd,headers:{'Accept':'application/json'}})
+  fetch(FORMSPREE_ENDPOINT,{method:'POST',body:withFormKey(fd),headers:{'Accept':'application/json'}})
     .then(res=>{
       if(res.ok){
         form.querySelectorAll('input,textarea,button.news-interest-submit').forEach(el=>el.style.display='none');
