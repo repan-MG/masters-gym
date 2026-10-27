@@ -1166,6 +1166,7 @@ button{cursor:pointer;font-family:var(--sans)}
 .offer-modal-close{position:absolute;top:12px;right:12px;width:34px;height:34px;border:none;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:20px;line-height:1;cursor:pointer;transition:background-color .15s ease;z-index:1}
 .offer-modal-close:hover{background:rgba(255,255,255,.22)}
 @media(max-width:480px){.offer-modal-body{padding:20px 18px 24px}.offer-modal-body h3{font-size:18px}}
+@media(max-width:768px){.offer-modal-overlay{padding:12px}.offer-modal{max-height:calc(100dvh - 24px);overflow-y:auto}.offer-modal-image{max-height:calc(100dvh - 230px);object-position:top}}
 
 /* ── IMAGE BAND (Medlemskap → Recensioner) ──
    Full-bleed photo break. Same grade as the Våra pass carousel so the
