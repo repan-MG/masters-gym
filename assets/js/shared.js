@@ -2586,14 +2586,13 @@ initMobileCarousel('membershipsSecondary','membershipsSecondaryDots','.membershi
   }
 
   // Footer link to change the choice later
-  document.querySelectorAll('.footer-privacy').forEach(function(p){
+  document.querySelectorAll('.footer-col a[data-i18n="footer_privacy"]').forEach(function(priv){
     var a = document.createElement('a');
     a.href = '#';
     a.className = 'cookie-settings-link';
     a.textContent = isEn() ? 'Cookie settings' : 'Cookie-inställningar';
     a.addEventListener('click', function(e){ e.preventDefault(); showBanner(); });
-    p.appendChild(document.createTextNode(' · '));
-    p.appendChild(a);
+    priv.insertAdjacentElement('afterend', a);
   });
 
   var choice = getChoice();
