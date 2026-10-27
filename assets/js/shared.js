@@ -739,7 +739,7 @@ const CSV_TEMP_CLASSES='https://docs.google.com/spreadsheets/d/e/2PACX-1vSx5DO8V
 const CSV_EXCEPTIONS='https://docs.google.com/spreadsheets/d/e/2PACX-1vSx5DO8VUAhMLv96t_zPgSghNPBuK683Hchwlc1MYh_XlmkNOCcphDAcNde1g42-Q/pub?gid=826852807&single=true&output=csv';
 // Contact forms go through Web3Forms (switched from Formspree, which blocked the form).
 // The access key is public by design; Web3Forms ties it to the gym's inbox.
-const WEB3FORMS_KEY=''; // paste the gym's Web3Forms access key here
+const WEB3FORMS_KEY='50580d49-b7c3-4930-944d-f8d667a7a1da';
 const FORMSPREE_ENDPOINT=WEB3FORMS_KEY?'https://api.web3forms.com/submit':'';
 function withFormKey(fd){fd.append('access_key',WEB3FORMS_KEY);fd.append('from_name','Masters Gym hemsida');return fd;}
 // Google Apps Script Web App URL for the schedule-alerts sign-up (Prenumeranter tab).
