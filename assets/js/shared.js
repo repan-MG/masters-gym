@@ -1311,6 +1311,7 @@ function toggleLang(){
   const legacyLangBtn=document.getElementById('lang-btn');
   if(legacyLangBtn)legacyLangBtn.textContent=currentLang==='sv'?'EN':'SV';
   document.documentElement.lang=currentLang;
+  try{localStorage.setItem('mg-lang',currentLang);}catch(e){}
   applyTranslations();
 }
 function applyTranslations(){
@@ -2598,4 +2599,22 @@ initMobileCarousel('membershipsSecondary','membershipsSecondaryDots','.membershi
   var choice = getChoice();
   if (choice === 'yes') loadGA();
   else if (choice !== 'no') showBanner();
+})();
+
+// ── Remember the chosen language across pages ──
+// toggleLang() saves the choice; here we re-apply it when a new page loads.
+// Runs after 'load' so every component that wraps toggleLang is hooked in first.
+(function(){
+  var saved=null;
+  try{saved=localStorage.getItem('mg-lang');}catch(e){}
+  if(saved!=='en')return;
+  window.addEventListener('load',function(){
+    setTimeout(function(){
+      if(typeof currentLang!=='undefined'&&currentLang!=='en'&&typeof toggleLang==='function'){
+        toggleLang();
+        var g=document.getElementById('gymbotLangToggle');
+        if(g)g.innerHTML='🇸🇪 SV';
+      }
+    },150);
+  });
 })();
