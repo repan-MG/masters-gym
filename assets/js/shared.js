@@ -2519,3 +2519,84 @@ initMobileCarousel('membershipsSecondary','membershipsSecondaryDots','.membershi
   if (start) pause();
   requestAnimationFrame(tick);
 })();
+
+// ── COOKIE CONSENT + GOOGLE ANALYTICS ──
+// Google Analytics only loads after the visitor clicks "Godkänn". Nothing is
+// stored and no banner shows until GA_MEASUREMENT_ID is filled in.
+// "Cookie-inställningar" in the footer reopens the banner so consent can be withdrawn.
+(function(){
+  var GA_MEASUREMENT_ID = '';
+  if (!GA_MEASUREMENT_ID) return;
+  var KEY = 'mg-cookie-consent';
+  function getChoice(){ try { return localStorage.getItem(KEY); } catch(e){ return null; } }
+  function setChoice(v){ try { localStorage.setItem(KEY, v); } catch(e){} }
+  function isEn(){ return typeof currentLang !== 'undefined' && currentLang === 'en'; }
+
+  var gaLoaded = false;
+  function loadGA(){
+    if (gaLoaded) return; gaLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', GA_MEASUREMENT_ID);
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+    document.head.appendChild(s);
+  }
+  function clearGACookies(){
+    document.cookie.split(';').forEach(function(c){
+      var name = c.split('=')[0].trim();
+      if (/^_ga/.test(name)) {
+        var host = location.hostname.replace(/^www\./, '');
+        ['', '; domain=' + host, '; domain=.' + host].forEach(function(d){
+          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + d;
+        });
+      }
+    });
+  }
+
+  var banner;
+  function showBanner(){
+    if (banner) { banner.remove(); }
+    var en = isEn();
+    banner = document.createElement('div');
+    banner.className = 'cookie-banner';
+    banner.setAttribute('role', 'dialog');
+    banner.setAttribute('aria-label', en ? 'Cookie settings' : 'Cookie-inställningar');
+    banner.innerHTML =
+      '<p class="cookie-banner-text">' + (en
+        ? 'We use Google Analytics to see how the site is used, so we can make it better. It sets cookies only if you accept.'
+        : 'Vi använder Google Analytics för att se hur sidan används, så att vi kan göra den bättre. Det sätter cookies bara om du godkänner.') +
+      ' <a href="integritetspolicy.html">' + (en ? 'Read more' : 'Läs mer') + '</a></p>' +
+      '<div class="cookie-banner-btns">' +
+        '<button type="button" class="cookie-btn" data-choice="no">' + (en ? 'Decline' : 'Neka') + '</button>' +
+        '<button type="button" class="cookie-btn" data-choice="yes">' + (en ? 'Accept' : 'Godkänn') + '</button>' +
+      '</div>';
+    banner.addEventListener('click', function(e){
+      var b = e.target.closest('[data-choice]');
+      if (!b) return;
+      var v = b.getAttribute('data-choice');
+      setChoice(v);
+      if (v === 'yes') loadGA();
+      else { clearGACookies(); if (gaLoaded) location.reload(); }
+      banner.remove(); banner = null;
+    });
+    document.body.appendChild(banner);
+  }
+
+  // Footer link to change the choice later
+  document.querySelectorAll('.footer-privacy').forEach(function(p){
+    var a = document.createElement('a');
+    a.href = '#';
+    a.className = 'cookie-settings-link';
+    a.textContent = isEn() ? 'Cookie settings' : 'Cookie-inställningar';
+    a.addEventListener('click', function(e){ e.preventDefault(); showBanner(); });
+    p.appendChild(document.createTextNode(' · '));
+    p.appendChild(a);
+  });
+
+  var choice = getChoice();
+  if (choice === 'yes') loadGA();
+  else if (choice !== 'no') showBanner();
+})();
