@@ -226,7 +226,7 @@ try{(function(){
   fetchPricing();
   fetchClasses();
   fetchPageContent('siteHero', ['hero_eyebrow','hero_everybody','hero_desc','hero_corp_link'], ['hero_image']);
-  fetchHeroVideo();
+  // fetchHeroVideo(); // disabled: hero now uses the optimised desktop + mobile files in the repo
   fetchPageContent('siteFAQ', ['faq_q1','faq_q2','faq_q4','faq_q5','faq_q6','faq_q7','faq_q8','faq_a2','faq_a6','faq_a7','faq_a8'], []);
   fetchPageContent('siteContact', ['contact_h2','contact_sub','contact_hours','contact_address','contact_phone_display'], []);
   fetchPageContent('siteFooter', ['footer_sub'], []);
