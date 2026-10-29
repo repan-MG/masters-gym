@@ -1,0 +1,37 @@
+name: CodeQL security scan
+
+# Scans the site's JavaScript for security bugs (e.g. untrusted data going
+# into innerHTML) on every code change and once a week. Results show up
+# under the repo's Security tab > Code scanning.
+
+on:
+  push:
+    branches: [main]
+    paths: ['**/*.js', '**/*.html', '.github/workflows/codeql.yml']
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '23 4 * * 1'   # Mondays
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    # Only in the main repo, never in forks.
+    if: github.repository == 'stormieperformance/masters-gym'
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          queries: security-extended
+          config: |
+            paths-ignore:
+              - assets/vendor
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: '/language:javascript-typescript'
