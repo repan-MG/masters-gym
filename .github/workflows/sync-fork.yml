@@ -20,5 +20,5 @@ jobs:
     steps:
       - name: Sync fork with the main repo
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.SYNC_PAT || secrets.GITHUB_TOKEN }}
         run: gh repo sync "$GITHUB_REPOSITORY" --source stormieperformance/masters-gym --branch main
