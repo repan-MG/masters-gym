@@ -2,6 +2,7 @@
 <html lang="sv">
 <head>
 <meta charset="UTF-8"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io https://*.tile.openstreetmap.org https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self' https://cdn.sanity.io; connect-src 'self' https://9hvgh1q1.apicdn.sanity.io https://9hvgh1q1.api.sanity.io https://docs.google.com https://*.googleusercontent.com https://script.google.com https://api.web3forms.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; form-action 'self' https://api.web3forms.com; base-uri 'self'; object-src 'none'; frame-src 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preload" as="image" href="IMG_8384.jpg" fetchpriority="high">
 <title>Masters Gym Stockholm — Kick- & Thaiboxning</title>
@@ -42,7 +43,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/shared.css?v=20261027200706">
+<link rel="stylesheet" href="assets/css/shared.css?v=20261029151011">
 </head>
 <body>
 
@@ -52,7 +53,7 @@
     <button class="modal-close" id="modal-close" aria-label="Stäng">&times;</button>
     <h3 id="modal-title-text" data-i18n="modal_title">BOKA PROVPASS</h3>
     <p class="modal-sub" data-i18n="modal_sub">Prova ditt första pass för 200 kr. Vi återkommer inom 24 timmar.</p>
-    <p class="modal-schedule-hint"><a href="schema.html" onclick="closeModal()"><span data-i18n="modal_schedule_hint_q">Osäker på när du kan träna?</span> <span class="modal-schedule-hint-teal" data-i18n="modal_schedule_hint_link">Se schemat här →</span></a></p>
+    <p class="modal-schedule-hint"><a href="schema.html" data-close-modal><span data-i18n="modal_schedule_hint_q">Osäker på när du kan träna?</span> <span class="modal-schedule-hint-teal" data-i18n="modal_schedule_hint_link">Se schemat här →</span></a></p>
     <form class="modal-form" name="provpass" method="POST" id="booking-form">
       <input type="hidden" name="form-name" value="provpass"/>
       <p style="display:none" aria-hidden="true"><label>Fyll inte i detta: <input name="_gotcha" tabindex="-1" autocomplete="off"/></label></p>
@@ -581,49 +582,49 @@
 
     <div class="faq-list" id="faqList">
       <div class="faq-item open">
-        <button type="button" class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <button type="button" class="faq-q" data-faq-toggle>
           <span data-i18n="faq_q1">Måste jag vara vältränad för att börja?</span>
           <span class="faq-plus">+</span>
         </button>
         <div class="faq-a"><p><span data-i18n="faq_a1_pre">Nej. </span><a href="#classes" data-i18n="faq_a1_link">Alla pass</a><span data-i18n="faq_a1_post"> är byggda för att fungera oavsett var du står idag. Vi anpassar tempo och intensitet efter gruppen, inte tvärtom.</span></p></div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <button type="button" class="faq-q" data-faq-toggle>
           <span data-i18n="faq_q2">Måste jag sparras?</span>
           <span class="faq-plus">+</span>
         </button>
         <div class="faq-a"><p data-i18n="faq_a2">Nej, sparring är alltid frivilligt och sker bara i grupper där det är relevant, med rätt skyddsutrustning.</p></div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <button type="button" class="faq-q" data-faq-toggle>
           <span data-i18n="faq_q4">Får jag låna utrustning första gången?</span>
           <span class="faq-plus">+</span>
         </button>
         <div class="faq-a"><p><span data-i18n="faq_a4_pre">Ja, vid </span><button type="button" class="faq-inline-link open-modal" data-i18n="faq_a4_link">provpasset</button><span data-i18n="faq_a4_post"> står vi för handskar och det du behöver för att testa på riktigt.</span></p></div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <button type="button" class="faq-q" data-faq-toggle>
           <span data-i18n="faq_q5">Vilken ålder gäller för barnträning?</span>
           <span class="faq-plus">+</span>
         </button>
         <div class="faq-a"><p><span data-i18n="faq_a5_pre">Se </span><a href="junior.html" data-i18n="nav_kids">Barn & Junior</a><span data-i18n="faq_a5_post">-sidan för fullständig åldersindelning och nivåer.</span></p></div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <button type="button" class="faq-q" data-faq-toggle>
           <span data-i18n="faq_q6">Jag har aldrig tränat kampsport, kan jag börja hos er?</span>
           <span class="faq-plus">+</span>
         </button>
         <div class="faq-a"><p data-i18n="faq_a6">Absolut. Nybörjarpassen är gjorda för det, vi börjar med grunderna (slag, sparkar, fotarbete) och bygger på därifrån. Du behöver inte kunna någonting innan ditt första pass.</p></div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <button type="button" class="faq-q" data-faq-toggle>
           <span data-i18n="faq_q7">Vad är skillnaden mellan thaiboxning och kickboxning?</span>
           <span class="faq-plus">+</span>
         </button>
         <div class="faq-a"><p data-i18n="faq_a7">Båda är stående kampsporter med slag, sparkar och fotarbete. Thaiboxning (muaythai) innehåller även knän, armbågar och clinch. Som nybörjare behöver du inte kunna skillnaden, du hittar din stil längs vägen.</p></div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        <button type="button" class="faq-q" data-faq-toggle>
           <span data-i18n="faq_q8">Hur skiljer sig kampsport från ett vanligt gympass?</span>
           <span class="faq-plus">+</span>
         </button>
@@ -641,20 +642,20 @@
       <div class="contact-details">
         <div class="contact-row"><span class="contact-label" data-i18n="contact_addr_label">Adress</span><p data-i18n="contact_address">Norra Agnegatan 36, Stockholm</p></div>
         <div class="contact-row"><span class="contact-label" data-i18n="contact_metro_label">T-bana</span><p data-i18n="contact_metro">Rådhuset (Röda linjen)</p></div>
-        <div class="contact-row"><span class="contact-label" data-i18n="contact_phone_label">Telefon</span><p><a href="tel:+46709427280" data-i18n="contact_phone_display" style="color:var(--text);transition:color .2s" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--text)'">0709-42 72 80</a></p></div>
-        <div class="contact-row"><span class="contact-label">Mail</span><p><a href="mailto:repan@mastersgym.se" style="color:var(--text);transition:color .2s" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--muted)'">repan@mastersgym.se</a></p></div>
+        <div class="contact-row"><span class="contact-label" data-i18n="contact_phone_label">Telefon</span><p><a class="hover-teal" href="tel:+46709427280" data-i18n="contact_phone_display" style="color:var(--text);transition:color .2s">0709-42 72 80</a></p></div>
+        <div class="contact-row"><span class="contact-label">Mail</span><p><a class="hover-teal" href="mailto:repan@mastersgym.se" style="color:var(--text);transition:color .2s">repan@mastersgym.se</a></p></div>
         <div class="contact-row"><span class="contact-label" data-i18n="contact_hours_label">Öppettider</span><p data-i18n="contact_hours">Öppet 30 min innan första passet och 30 min efter sista passet</p></div>
       </div>
       <div class="contact-social-row" style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:24px">
-        <a href="https://instagram.com/mastersgymstockholm" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);transition:color .2s" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--muted)'">
+        <a class="hover-teal" href="https://instagram.com/mastersgymstockholm" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);transition:color .2s">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg>
           Instagram
         </a>
-        <a href="https://www.facebook.com/mastersgymsweden" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);transition:color .2s" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--muted)'">
+        <a class="hover-teal" href="https://www.facebook.com/mastersgymsweden" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);transition:color .2s">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           Facebook
         </a>
-        <a href="https://www.tiktok.com/@mastersgym" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);transition:color .2s" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--muted)'">
+        <a class="hover-teal" href="https://www.tiktok.com/@mastersgym" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);transition:color .2s">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
           TikTok
         </a>
@@ -705,8 +706,8 @@
   </div>
 </footer>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" media="print" onload="this.media='all'">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<script src="assets/vendor/leaflet/leaflet.js"></script>
 <div class="gymbot" id="gymbot">
   <div class="gymbot-bubble" id="gymbotBubble"></div>
   <button type="button" class="gymbot-toggle" id="gymbotToggle" aria-label="Snabbhjälp" aria-expanded="false">
@@ -732,7 +733,7 @@
   </div>
 </div>
 
-<script src="assets/js/shared.js?v=20261027201117"></script>
+<script src="assets/js/shared.js?v=20261029151011"></script>
 </body>
 </html>
 

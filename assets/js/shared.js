@@ -154,7 +154,7 @@ try{(function(){
           if(key.endsWith('_imageUrl')){
             if(!c[key])return;
             const imgEl=document.getElementById(key.replace('_imageUrl','_img'));
-            if(imgEl)imgEl.src=c[key];
+            if(imgEl&&safeUrl(c[key]))imgEl.src=safeUrl(c[key]);
             return;
           }
           const m=key.match(/^(.+)_(sv|en)$/);
@@ -189,7 +189,7 @@ try{(function(){
       el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openOfferModal(); } });
       window.addEventListener('resize',syncOfferBannerHeight);
     }
-    el.innerHTML='<span class="offer-banner-icon">\u2728</span><span class="offer-banner-text">'+activeOffer.bannerText+'</span><span class="offer-banner-arrow">Läs mer &rarr;</span>';
+    el.innerHTML='<span class="offer-banner-icon">\u2728</span><span class="offer-banner-text">'+esc(activeOffer.bannerText)+'</span><span class="offer-banner-arrow">Läs mer &rarr;</span>';
     syncOfferBannerHeight();
     window.addEventListener('load',syncOfferBannerHeight);
   }
@@ -202,11 +202,12 @@ try{(function(){
     const overlay=document.createElement('div');
     overlay.id='offerModalOverlay';
     overlay.className='offer-modal-overlay';
-    const imgHtml=activeOffer.imageUrl?'<img class="offer-modal-image" src="'+activeOffer.imageUrl+'" alt="'+(activeOffer.imageAlt||'')+'">':'';
+    const offerImg=safeUrl(activeOffer.imageUrl);
+    const imgHtml=offerImg?'<img class="offer-modal-image" src="'+esc(offerImg)+'" alt="'+esc(activeOffer.imageAlt||'')+'">':'';
     overlay.innerHTML='<div class="offer-modal" role="dialog" aria-modal="true" aria-labelledby="offerModalTitle">'+
       '<button class="offer-modal-close" aria-label="Stäng">&times;</button>'+
       imgHtml+
-      '<div class="offer-modal-body"><h3 id="offerModalTitle">'+activeOffer.bannerText+'</h3><p>'+detail+'</p>'+
+      '<div class="offer-modal-body"><h3 id="offerModalTitle">'+esc(activeOffer.bannerText)+'</h3><p>'+esc(detail)+'</p>'+
       '<a href="sms:0709427280" class="offer-modal-cta">SMS:A OSS</a></div></div>';
     document.body.appendChild(overlay);
     requestAnimationFrame(()=>overlay.classList.add('open'));
@@ -264,7 +265,7 @@ try{(function(){
           if(key.endsWith('Url')){
             if(!c[key])return;
             const el=document.getElementById(key.replace('Url',''));
-            if(el)el.src=c[key];
+            if(el&&safeUrl(c[key]))el.src=safeUrl(c[key]);
             return;
           }
           const m=key.match(/^(.+)_(sv|en)$/);
@@ -428,7 +429,7 @@ try{(function(){
     if(key==='offers'){
       if(activeOffer&&activeOffer.bannerText){
         const detail=activeOffer.detailText||activeOffer.bannerText;
-        body.insertAdjacentHTML('beforeend','<div class="gymbot-screen-title">'+activeOffer.bannerText+'</div><p class="gymbot-screen-text">'+detail+'</p><div class="gymbot-screen-actions"><a href="sms:0709427280" class="gymbot-cta">'+t.offers_cta+'</a></div>');
+        body.insertAdjacentHTML('beforeend','<div class="gymbot-screen-title">'+esc(activeOffer.bannerText)+'</div><p class="gymbot-screen-text">'+esc(detail)+'</p><div class="gymbot-screen-actions"><a href="sms:0709427280" class="gymbot-cta">'+t.offers_cta+'</a></div>');
         body.querySelector('.gymbot-cta').addEventListener('click',closePanel);
       } else {
         const listHtml=t.offers_list.map(line=>'<li>'+line+'</li>').join('');
@@ -764,6 +765,14 @@ const dagOrder=['Måndag','Tisdag','Onsdag','Torsdag','Fredag','Lördag','Sönda
 function esc(v){
   if(v===null||v===undefined)return'';
   return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+// Only allow https:// URLs or plain local file names for images/media coming from data (e.g. Sanity).
+function safeUrl(u){
+  if(!u)return'';
+  u=String(u).trim();
+  if(/^https:\/\//i.test(u))return u;
+  if(/^[a-z0-9_\-\/.]+\.(jpe?g|png|webp|gif|avif|svg|mp4)(\?[a-z0-9=&._-]*)?$/i.test(u))return u;
+  return'';
 }
 function splitPassLevel(str){
   // The sheet's "Nivå" column holds "ClassName – Level" combined on purpose
@@ -1141,7 +1150,7 @@ async function loadNews(){
       const footerId=`news-body-${i}`;
       const formId=`news-form-${i}`;
       const formHtml=r.interestForm?`
-        <form class="news-interest-form" id="${formId}" onsubmit="return submitNewsForm(event,'${formId}','${esc(title).replace(/'/g,"\'")}')">
+        <form class="news-interest-form" id="${formId}" data-title="${esc(title)}">
           <p class="news-interest-label">${esc(r.interestFormQuestion||'')}</p>
           <input type="text" name="namn" placeholder="Namn" required>
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
@@ -1152,17 +1161,28 @@ async function loadNews(){
           <p class="form-privacy">Vi använder dina uppgifter bara för att svara dig. <a href="integritetspolicy.html" target="_blank">Integritetspolicy</a></p>
         </form>`:'';
       return `<div class="news-card">
-        <img class="news-card-img${imgUrl?'':' news-card-img-fallback'}" src="${imgUrl||'MastersGymLogo.png'}" alt="${esc(imgAlt)||'Masters Gym'}" loading="lazy" />
+        <img class="news-card-img${imgUrl?'':' news-card-img-fallback'}" src="${esc(safeUrl(imgUrl)||'MastersGymLogo.png')}" alt="${esc(imgAlt)||'Masters Gym'}" loading="lazy" />
         <div class="news-meta">
           <span class="news-tag">${esc(tag)}</span>
           ${date?`<span class="news-date">${esc(date)}</span>`:''}
         </div>
         <h3 class="news-title">${esc(title)}</h3>
         <p class="news-teaser">${esc(teaser)}</p>
-        ${body?`<button type="button" class="news-card-footer clickable" onclick="const el=document.getElementById('${footerId}');el.classList.toggle('open');this.textContent=el.classList.contains('open')?'Visa mindre ←':'Läs mer →';">Läs mer →</button><p class="news-card-body" id="${footerId}">${esc(body)}</p>`:''}
+        ${body?`<button type="button" class="news-card-footer clickable" data-toggle-body="${footerId}">Läs mer →</button><p class="news-card-body" id="${footerId}">${esc(body)}</p>`:''}
         ${formHtml}
       </div>`;
     }).join('');
+    newsGrid.querySelectorAll('.news-interest-form').forEach(f=>{
+      f.addEventListener('submit',e=>submitNewsForm(e,f.id,f.dataset.title||''));
+    });
+    newsGrid.querySelectorAll('[data-toggle-body]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const el=document.getElementById(btn.dataset.toggleBody);
+        if(!el)return;
+        el.classList.toggle('open');
+        btn.textContent=el.classList.contains('open')?'Visa mindre ←':'Läs mer →';
+      });
+    });
   }catch(err){
     newsGrid.innerHTML='<p style="color:var(--muted);font-size:14px">Kunde inte ladda nyheter.</p>';
   }
@@ -1197,7 +1217,7 @@ function submitNewsForm(e,formId,postTitle){
 }
 
 const mapEl=document.getElementById('map');
-if(mapEl){
+if(mapEl&&window.L){
   const map=L.map('map',{scrollWheelZoom:false}).setView([59.3293,18.0440],15);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
   const icon=L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#74C1BB;border-radius:50%;border:2px solid #080808;box-shadow:0 0 0 4px rgba(116,194,188,0.3);"></div>',iconSize:[14,14],iconAnchor:[7,7]});
@@ -1318,7 +1338,7 @@ function applyTranslations(){
   const t=translations[currentLang];
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const key=el.getAttribute('data-i18n');if(t[key]===undefined)return;
-    if((el.tagName==='H2'||el.tagName==='H1')&&t[key].includes('\n')){el.innerHTML=t[key].replace(/\n/g,'<br>');}
+    if((el.tagName==='H2'||el.tagName==='H1')&&t[key].includes('\n')){el.innerHTML=esc(t[key]).replace(/\n/g,'<br>');}
     else{el.textContent=t[key];}
   });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const key=el.getAttribute('data-i18n-placeholder');if(t[key]!==undefined)el.placeholder=t[key];});
@@ -1679,7 +1699,7 @@ initMobileCarousel('membershipsSecondary','membershipsSecondaryDots','.membershi
       el.setAttribute('tabindex','0');
       el.setAttribute('role','button');
       el.setAttribute('aria-label',c.name+', '+c.discipline);
-      el.innerHTML = '<img src="'+c.img+'" alt="'+c.name+'" loading="lazy"><div class="coach3d-card-overlay"></div><div class="coach3d-card-info"><div class="coach3d-card-discipline">'+c.discipline+'</div><div class="coach3d-card-name">'+c.name+'</div></div>';
+      el.innerHTML = '<img src="'+esc(safeUrl(c.img))+'" alt="'+esc(c.name)+'" loading="lazy"><div class="coach3d-card-overlay"></div><div class="coach3d-card-info"><div class="coach3d-card-discipline">'+esc(c.discipline)+'</div><div class="coach3d-card-name">'+esc(c.name)+'</div></div>';
       el.addEventListener('click', (function(idx){ return function(){ if(!animating) goTo(idx); }; })(i));
       el.addEventListener('keydown', (function(idx){ return function(e){ if((e.key==='Enter'||e.key===' ')&&!animating){ e.preventDefault(); goTo(idx); } }; })(i));
       stage.appendChild(el);
@@ -1691,7 +1711,7 @@ initMobileCarousel('membershipsSecondary','membershipsSecondaryDots','.membershi
       t.setAttribute('tabindex','0');
       t.setAttribute('role','button');
       t.setAttribute('aria-label',c.name);
-      t.innerHTML = '<img src="'+c.img+'" alt="'+c.name+'">';
+      t.innerHTML = '<img src="'+esc(safeUrl(c.img))+'" alt="'+esc(c.name)+'">';
       t.addEventListener('click', (function(idx){ return function(){ if(!animating) goTo(idx); }; })(i));
       t.addEventListener('keydown', (function(idx){ return function(e){ if((e.key==='Enter'||e.key===' ')&&!animating){ e.preventDefault(); goTo(idx); } }; })(i));
       thumbsEl.appendChild(t);
@@ -1901,7 +1921,7 @@ initMobileCarousel('membershipsSecondary','membershipsSecondaryDots','.membershi
       el.setAttribute('tabindex','0');
       el.setAttribute('role','button');
       el.setAttribute('aria-label',o.title);
-      el.innerHTML = '<img src="'+o.img+'" alt="'+o.title+'" loading="lazy"><div class="finder3d-card-overlay"><h3 class="finder3d-card-title">'+o.title+'</h3></div>';
+      el.innerHTML = '<img src="'+esc(safeUrl(o.img))+'" alt="'+esc(o.title)+'" loading="lazy"><div class="finder3d-card-overlay"><h3 class="finder3d-card-title">'+esc(o.title)+'</h3></div>';
       el.addEventListener('click', (function(idx){ return function(){
         pauseAutoplay();
         if(idx===current && !transitioning){ location.href = getOptions()[idx].route; return; }
@@ -1920,7 +1940,7 @@ initMobileCarousel('membershipsSecondary','membershipsSecondaryDots','.membershi
       t.setAttribute('tabindex','0');
       t.setAttribute('role','button');
       t.setAttribute('aria-label',o.title);
-      t.innerHTML = '<span>'+o.title+'</span>';
+      t.innerHTML = '<span>'+esc(o.title)+'</span>';
       t.addEventListener('click', (function(idx){ return function(){ pauseAutoplay(); goTo(idx); }; })(i));
       t.addEventListener('keydown', (function(idx){ return function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pauseAutoplay(); goTo(idx); } }; })(i));
       thumbsEl.appendChild(t);
@@ -2250,7 +2270,7 @@ initMobileCarousel('membershipsSecondary','membershipsSecondaryDots','.membershi
       var imgUrl = sanityImageUrl(imgRef, 500);
       var tag = (r.tag||'Nyhet').trim();
       return '<a href="nyheter.html" class="news-teaser-card">'
-        + '<img src="'+(imgUrl||'MastersGymLogo.png')+'" alt="'+esc(title)+'" loading="lazy">'
+        + '<img src="'+esc(safeUrl(imgUrl)||'MastersGymLogo.png')+'" alt="'+esc(title)+'" loading="lazy">'
         + '<div class="news-teaser-card-info">'
         + '<span class="news-teaser-card-tag">'+esc(tag)+'</span>'
         + '<h4 class="news-teaser-card-title">'+esc(title)+'</h4>'
@@ -2618,3 +2638,13 @@ initMobileCarousel('membershipsSecondary','membershipsSecondaryDots','.membershi
     },150);
   });
 })();
+
+// ── Delegated click handlers (replace the old inline onclick="" attributes, so the CSP can block inline script) ──
+document.addEventListener('click',function(e){
+  var closer=e.target.closest('[data-close-modal]');
+  if(closer&&typeof closeModal==='function')closeModal();
+  var faq=e.target.closest('[data-faq-toggle]');
+  if(faq){var item=faq.closest('.faq-item');if(item)item.classList.toggle('open');}
+  var view=e.target.closest('[data-schedule-view]');
+  if(view&&typeof setScheduleView==='function')setScheduleView(view.getAttribute('data-schedule-view'));
+});
