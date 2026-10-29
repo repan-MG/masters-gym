@@ -1,0 +1,24 @@
+name: Keep fork in sync
+
+# Does nothing in the main repo. In a fork (e.g. Masters Gym's backup copy)
+# it pulls in every new change from stormieperformance/masters-gym every
+# hour, so the fork is always up to date without anyone clicking "Sync fork".
+# The fork owner only needs to enable Actions on the fork once.
+
+on:
+  schedule:
+    - cron: '7 * * * *'   # every hour
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.event.repository.fork == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync fork with the main repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh repo sync "$GITHUB_REPOSITORY" --source stormieperformance/masters-gym --branch main

@@ -14,6 +14,8 @@ permissions:
 
 jobs:
   generate:
+    # Only run in the main repo, never in forks (a fork must stay an exact copy so it can auto-sync).
+    if: github.repository == 'stormieperformance/masters-gym'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
