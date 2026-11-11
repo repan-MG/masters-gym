@@ -5,12 +5,12 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.sanity.io https://*.tile.openstreetmap.org https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self' https://cdn.sanity.io; connect-src 'self' https://9hvgh1q1.apicdn.sanity.io https://9hvgh1q1.api.sanity.io https://docs.google.com https://*.googleusercontent.com https://script.google.com https://api.web3forms.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; form-action 'self' https://api.web3forms.com; base-uri 'self'; object-src 'none'; frame-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Personlig träning med Thamer — Masters Gym Stockholm</title>
-<meta name="description" content="PT med Thamer, huvudtränare och världsmästare på Masters Gym. Skräddarsydd personlig träning från amatör till elitnivå, samt PT för barn.">
+<title>Personlig träning med Thamer och Tanja — Masters Gym Stockholm</title>
+<meta name="description" content="Personlig träning på Masters Gym med Thamer, huvudtränare och världsmästare, eller Tanja, coach för nybörjar- och fyspass. Skräddarsydd PT för vuxna och barn.">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta property="og:title" content="Personlig träning med Thamer — Masters Gym Stockholm">
-<meta property="og:description" content="PT med Thamer, huvudtränare och världsmästare på Masters Gym. Skräddarsydd personlig träning från amatör till elitnivå, samt PT för barn.">
+<meta property="og:title" content="Personlig träning med Thamer och Tanja — Masters Gym Stockholm">
+<meta property="og:description" content="Personlig träning på Masters Gym med Thamer, huvudtränare och världsmästare, eller Tanja, coach för nybörjar- och fyspass. Skräddarsydd PT för vuxna och barn.">
 <meta property="og:image" content="https://mastersgym.se/og-image.jpg">
 <meta property="og:url" content="https://mastersgym.se/pt.html">
 <meta property="og:type" content="website">
@@ -42,7 +42,8 @@
         <option data-i18n="modal_opt2">Fortsättningspass</option>
         <option data-i18n="modal_opt3">Boxning</option>
         <option data-i18n="modal_opt4">Fyspass</option>
-        <option data-i18n="modal_opt8">PT-pass</option>
+        <option data-i18n="modal_opt8">PT med Thamer</option>
+        <option data-i18n="modal_opt10">PT med Tanja</option>
         <option data-i18n="modal_opt5">Barnträning</option>
         <option data-i18n="modal_opt6">Företagsträning</option>
         <option data-i18n="modal_opt9">Morgon/Lunch</option>
@@ -181,8 +182,8 @@
 
 <section class="page-intro" style="padding:calc(var(--banner-h,0px) + 130px) 24px 20px;max-width:760px;margin:0 auto;text-align:center">
   <p class="section-label" style="justify-content:center;display:flex;color:var(--text)">Personlig träning</p>
-  <h1 class="reveal-h2" style="font-size:clamp(32px,6vw,52px);margin-bottom:6px">PT MED THAMER</h1>
-  <p style="color:var(--muted);font-size:15px;font-weight:300;max-width:560px;margin:0 auto 8px">Skräddarsydd personlig träning med en världsmästare och huvudtränare på Masters Gym — för dig eller ditt barn.</p>
+  <h1 class="reveal-h2" style="font-size:clamp(32px,6vw,52px);margin-bottom:6px"><span data-i18n="pt_page_h1">PT MED THAMER &amp; TANJA</span></h1>
+  <p style="color:var(--muted);font-size:15px;font-weight:300;max-width:560px;margin:0 auto 8px"><span data-i18n="pt_page_sub">Skräddarsydd personlig träning med två av våra coacher, för dig eller ditt barn. Välj den tränare som passar dina mål.</span></p>
   <a href="index.html" style="display:inline-block;margin-top:6px;font-size:13px;color:var(--text);text-decoration:none">&larr; Tillbaka till startsidan</a>
 </section>
 <section class="page-content-wrap" style="max-width:1100px;margin:0 auto;padding:0 24px 60px">
@@ -195,6 +196,9 @@
     <p class="founder-label" data-i18n="coach_label">Head Coach</p>
     <h2 class="founder-h2 reveal-h2">THAMER</h2>
     <p class="founder-text" data-i18n="coach_text">Thamer är huvudtränaren på Masters Gym. Han har en lång och imponerande meritlista med stora internationella framgångar — både som tävlande och som coach.</p>
+    <div class="coach-pt-ctas" style="margin:4px 0 18px">
+      <button type="button" class="btn btn-dark-glow open-modal" data-pass="modal_opt8"><span data-i18n="pt_book_thamer">Boka PT med Thamer</span></button>
+    </div>
     <button type="button" class="timeline-expand" id="founder-expand-btn" aria-expanded="false">
       <span data-i18n="timeline_more">Mer information</span>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
@@ -213,10 +217,24 @@
     </div>
   </div>
 </div>
+<div class="founder-container pt-coach-tanja" style="margin-bottom:80px">
+  <div class="founder-img-wrap">
+    <img src="Coach-Tanja.jpg" alt="Tanja, coach på Masters Gym" loading="lazy">
+    <div class="founder-bar"><span data-i18n="tanja_bar">MASTERS GYM · COACH</span></div>
+  </div>
+  <div>
+    <p class="founder-label" data-i18n="tanja_label">Coach · PT</p>
+    <h2 class="founder-h2 reveal-h2">TANJA</h2>
+    <p class="founder-text" data-i18n="tanja_pt_text">Tanja har tränat kickboxning sedan 2010 och varit coach på Masters Gym sedan 2022. Hon håller i våra nybörjar- och fyspass, och passar perfekt om du vill komma igång, bygga grundteknik eller komma i form i din egen takt.</p>
+    <div class="coach-pt-ctas" style="margin-top:22px">
+      <button type="button" class="btn btn-dark-glow open-modal" data-pass="modal_opt10"><span data-i18n="pt_book_tanja">Boka PT med Tanja</span></button>
+    </div>
+  </div>
+</div>
 <div class="coach-pt" id="tl-6">
         <span class="timeline-badge" data-i18n="class5_tag">Personlig träning</span>
-        <h3 class="coach-pt-title" data-i18n="class5_title">PT MED THAMER</h3>
-        <p class="coach-pt-value" data-i18n="pt_value">Träna med en världsmästare och huvudtränare på Masters Gym. Skräddarsydd träning från amatör till elitnivå.</p>
+        <h3 class="coach-pt-title" data-i18n="class5_title">PT PÅ MASTERS GYM</h3>
+        <p class="coach-pt-value" data-i18n="pt_value">Träna med Thamer, världsmästare och huvudtränare, eller Tanja, coach för nybörjar- och fyspass. Skräddarsydd träning från nybörjare till elitnivå.</p>
 
         <ul class="coach-pt-checklist">
           <li data-i18n="pt_check1">Lär dig snabbare</li>
@@ -250,7 +268,7 @@
 
         <div class="coach-pt-ctas">
           <button type="button" class="btn btn-dark-glow open-modal" data-pass="modal_opt8" data-i18n="pt_cta_card">Boka PT-timme</button>
-          <a href="index.html#contact" class="btn btn-ghost" data-i18n="pt_contact_cta">Kontakta Thamer</a>
+          <a href="index.html#contact" class="btn btn-ghost" data-i18n="pt_contact_cta">Kontakta oss</a>
         </div>
       </div>
 </section>
@@ -353,6 +371,6 @@
   </div>
 </div>
 
-<script src="assets/js/shared.js?v=20261029151011"></script>
+<script src="assets/js/shared.js?v=20261111104759"></script>
 </body>
 </html>
