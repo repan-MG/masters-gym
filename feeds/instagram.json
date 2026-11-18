@@ -1,6 +1,14 @@
 {
   "posts": [
     {
+      "id": "18034947155681273",
+      "img": "feeds/instagram/18034947155681273.jpg",
+      "url": "https://www.instagram.com/p/Df4Roo1NrWQ/",
+      "type": "IMAGE",
+      "caption": "HAR DU FRISKVÅRDSBIDRAG KVAR? Låt det inte gå till spillo! Kom igång med kickboxning, thaiboxning och fysträning hos oss på Masters Gym! AN…",
+      "timestamp": "2026-11-18T10:23:00+0000"
+    },
+    {
       "id": "17964685839248632",
       "img": "feeds/instagram/17964685839248632.jpg",
       "url": "https://www.instagram.com/reel/Dfj3pBktSJW/",
@@ -55,14 +63,6 @@
       "type": "IMAGE",
       "caption": "Jag har varit fighter ungefär halva mitt liv inom kickboxning, thaiboxning och boxning. Den andra halvan har jag varit tränare för klubbar…",
       "timestamp": "2026-09-29T15:23:43+0000"
-    },
-    {
-      "id": "17953712511255915",
-      "img": "feeds/instagram/17953712511255915.jpg",
-      "url": "https://www.instagram.com/reel/Ddx_H9gtpgl/",
-      "type": "VIDEO",
-      "caption": "Masters gym avslutade helgen med tre av våra fighters på Nordic Open 2026 i Köpenhamn. @swedish_pinoy 60 kg Light Contact @nataliade_luna 6…",
-      "timestamp": "2026-09-27T06:44:43+0000"
     }
   ]
 }
